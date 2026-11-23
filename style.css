@@ -1,0 +1,321 @@
+/* Estilos según DESIGN.md: fondo crema, texto carbón, bordes cálidos, sin sombras en tarjetas. */
+
+:root {
+    --crema: #f7f4ed;
+    --carbon: #1c1c1c;
+    --blanco-roto: #fcfbf8;
+    --gris: #5f5f5d;
+    --borde: #eceae4;
+    --borde-interactivo: rgba(28, 28, 28, 0.4);
+    --tinte: rgba(28, 28, 28, 0.04);
+    --rojo: #a8433a; /* rojo apagado, solo para Agotado y errores */
+    --sombra-boton: rgba(255, 255, 255, 0.2) 0 0.5px 0 0 inset, rgba(0, 0, 0, 0.2) 0 0 0 0.5px inset,
+        rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+    --sombra-foco: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+body {
+    font-family: 'Camera Plain Variable', ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    background: var(--crema);
+    color: var(--carbon);
+}
+
+main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 16px 80px;
+}
+
+h1 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.9px;
+    margin: 0 0 24px;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 16px;
+}
+
+p {
+    color: rgba(28, 28, 28, 0.82);
+}
+
+a {
+    color: var(--carbon);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    text-decoration-thickness: 2px;
+}
+
+/* ---------- Cabecera ---------- */
+
+.cabecera {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--crema);
+    border-bottom: 1px solid var(--borde);
+}
+
+.cabecera .marca {
+    color: var(--carbon);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.salir {
+    margin: 0;
+}
+
+/* ---------- Botones y campos ---------- */
+
+button {
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--carbon);
+    color: var(--blanco-roto);
+    box-shadow: var(--sombra-boton);
+    cursor: pointer;
+}
+
+button:active {
+    opacity: 0.8;
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow: var(--sombra-boton), var(--sombra-foco);
+}
+
+/* Botones secundarios: contorno, sin fondo. */
+.salir button,
+.eliminar button {
+    background: transparent;
+    color: var(--carbon);
+    border: 1px solid var(--borde-interactivo);
+    box-shadow: none;
+}
+
+.salir button:hover,
+.eliminar button:hover {
+    background: var(--tinte);
+}
+
+.salir button:focus-visible,
+.eliminar button:focus-visible {
+    box-shadow: var(--sombra-foco);
+}
+
+input,
+select {
+    font: inherit;
+    padding: 8px 12px;
+    background: var(--crema);
+    color: var(--carbon);
+    border: 1px solid var(--borde-interactivo);
+    border-radius: 6px;
+}
+
+input::placeholder {
+    color: var(--gris);
+}
+
+input:focus-visible,
+select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+label {
+    color: rgba(28, 28, 28, 0.83);
+}
+
+/* ---------- Inicio ---------- */
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.menu a {
+    padding: 8px 16px;
+    border: 1px solid var(--borde-interactivo);
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.menu a:first-child {
+    background: var(--carbon);
+    color: var(--blanco-roto);
+    border-color: var(--carbon);
+    box-shadow: var(--sombra-boton);
+}
+
+.menu a:hover {
+    opacity: 0.85;
+}
+
+/* ---------- Catálogo ---------- */
+
+.buscador {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.catalogo {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.catalogo th,
+.catalogo td {
+    padding: 12px 16px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--borde);
+}
+
+.catalogo tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.catalogo th {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gris);
+    background: var(--tinte);
+}
+
+.catalogo img {
+    display: block;
+    object-fit: cover;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: var(--borde);
+}
+
+.cambiar-cantidad {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.cambiar-cantidad label {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.eliminar {
+    margin: 0;
+}
+
+.agotado {
+    color: var(--rojo);
+    font-weight: 600;
+}
+
+.acceso {
+    margin-top: 40px;
+    padding: 24px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.acceso form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ---------- Avisos y errores ---------- */
+
+.aviso {
+    padding: 12px 16px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: var(--tinte);
+    color: var(--carbon);
+}
+
+.error {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--rojo);
+}
+
+/* ---------- Inventario ---------- */
+
+.inventario {
+    display: grid;
+    gap: 6px;
+    max-width: 420px;
+    padding: 24px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.inventario br {
+    display: none; /* la separación la da el gap */
+}
+
+.inventario label {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.inventario label:first-child {
+    margin-top: 0;
+}
+
+.inventario button {
+    margin-top: 16px;
+    justify-self: start;
+}
+
+/* ---------- Móvil ---------- */
+
+@media (max-width: 600px) {
+    main {
+        padding: 24px 12px 56px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+        letter-spacing: -0.5px;
+    }
+
+    .catalogo {
+        display: block;
+        overflow-x: auto;
+    }
+}
