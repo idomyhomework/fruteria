@@ -10,12 +10,21 @@ cabecera('Catálogo');
 <h1>Catálogo</h1>
 
 <form method="get" action="catalogo.php" class="buscador" role="search">
-    <label for="q">Buscar Producto</label>
-    <input type="search" id="q" name="q" value="<?= e($q) ?>">
-    <button type="submit">Buscar</button>
-    <?php if ($q !== ''): ?>
-        <a href="catalogo.php">Quitar búsqueda</a>
-    <?php endif; ?>
+    <div style="display:flex; flex-direction: column; gap:12px">
+        <div>
+            <label for="q">Buscar Producto</label>
+            <input type="search" id="q" name="q" value="<?= e($q) ?>">
+            <button type="submit">Buscar</button>
+            <?php if ($q !== ''): ?>
+                <a href="catalogo.php">Quitar búsqueda</a>
+            <?php endif; ?>
+        </div>
+        <?php if (es_administrador()): ?>
+            <div>
+                <a href="/inventario.php">Ir al Inventario</a>
+            </div>
+        <?php endif; ?>
+    </div>
 </form>
 
 <?php if (count($productos) === 0 && $q !== ''): ?>
@@ -34,6 +43,8 @@ cabecera('Catálogo');
                 <?php if (es_administrador()): ?>
                     <th>Cambiar Cantidad</th>
                     <th>Eliminar</th>
+                <?php else: ?>
+                    <th>Comprar</th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -72,14 +83,29 @@ cabecera('Catálogo');
                         </td>
                         <td>
                             <form method="post" action="eliminar.php" class="eliminar"
-                                data-pregunta="¿Eliminar <?= e($p['nombre']) ?>?"
-                                onsubmit="return confirm(this.dataset.pregunta)">
+                                data-pregunta="¿Eliminar <?= e($p['nombre']) ?>?" onsubmit="return confirm(this.dataset.pregunta)">
                                 <input type="hidden" name="id" value="<?= (int) $p['id'] ?>">
                                 <input type="hidden" name="q" value="<?= e($q) ?>">
                                 <button type="submit">Eliminar</button>
                             </form>
                         </td>
+
+                    <?php else: ?>
+                        <td>
+                            <?php if ((float) $p['cantidad'] > 0): ?>
+                                <form method="post" action="carrito_anadir.php" class="cambiar-cantidad">
+                                    <input type="hidden" name="id" value="<?= (int) $p['id'] ?>">
+                                    <input type="hidden" name="q" value="<?= e($q) ?>">
+                                    <label>
+                                        Kilos
+                                        <input type="text" name="kilos" inputmode="decimal" size="6" required>
+                                    </label>
+                                    <button type="submit">Añadir al carrito</button>
+                                </form>
+                            <?php endif; ?>
+                        </td>
                     <?php endif; ?>
+                </tr>
                 </tr>
             <?php endforeach; ?>
         </tbody>

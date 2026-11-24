@@ -59,6 +59,7 @@ function error_de(array $errores, string $campo): void
 cabecera('Inventario');
 ?>
 <h1>Inventario</h1>
+<h4>Nuevo producto</h4>
 <p><a href="catalogo.php">Volver al Catálogo</a></p>
 
 <form method="post" action="inventario.php" class="inventario" novalidate>

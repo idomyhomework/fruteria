@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/carrito.php';
 require_once __DIR__ . '/sesion.php';
 // Escapa texto para mostrarlo en HTML (evita inyección de HTML/JS).
 function e(string $texto): string
@@ -39,6 +40,8 @@ function cabecera(string $titulo): void
                     <input type="hidden" name="volver" value="<?= e(basename($_SERVER['SCRIPT_NAME'])) ?>">
                     <button type="submit">Cerrar sesión</button>
                 </form>
+            <?php else :?>
+                 <a href="carrito.php" class="enlace-carrito">Carrito (<?= count(carrito()) ?>)</a>
             <?php endif; ?>
         </header>
         <main>

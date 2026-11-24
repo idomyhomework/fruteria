@@ -31,7 +31,8 @@ function bd_test(): PDO
 
 function reiniciar_bd(): void
 {
-    bd_test()->exec('DROP TABLE IF EXISTS producto');
+    // Primero las tablas que apuntan a producto (claves foráneas).
+    bd_test()->exec('DROP TABLE IF EXISTS linea_pedido, pedido, producto');
     bd_test()->exec(file_get_contents(RAIZ . '/sql/setup.sql'));
 }
 

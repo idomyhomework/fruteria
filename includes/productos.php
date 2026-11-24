@@ -58,3 +58,11 @@ function crear_producto(string $nombre, string $tipo, string $precio, string $ca
         throw $ex;
     }
 }
+
+// Un Producto por su id, o null si no existe.
+function buscar_producto(int $id): ?array
+{
+    $consulta = db()->prepare('SELECT id, nombre, precio, cantidad FROM producto WHERE id = ?');
+    $consulta->execute([$id]);
+    return $consulta->fetch() ?: null;
+}
