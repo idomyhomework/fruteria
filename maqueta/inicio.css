@@ -1,0 +1,229 @@
+/* Maqueta de la página de inicio: hero verde claro, botones naranja/verde, onda inferior. */
+
+:root {
+    --verde-fondo: #edf1e1;
+    --verde: #3b7d4f;
+    --naranja: #f08a00;
+    --naranja-oscuro: #d97b00;
+    --texto: #222222;
+    --gris: #5f5f5d;
+    --blanco: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Rubik', ui-sans-serif, system-ui, sans-serif;
+    color: var(--texto);
+    background: var(--blanco);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+    position: relative;
+    background: var(--verde-fondo);
+    padding: 24px 24px 140px;
+    overflow: hidden;
+}
+
+/* ---------- Barra superior (tarjeta blanca) ---------- */
+
+.barra {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--blanco);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 18px 28px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.marca-icono {
+    font-size: 1.4rem;
+}
+
+.barra-menu {
+    display: flex;
+    gap: 32px;
+    font-weight: 500;
+}
+
+.barra-menu a:hover {
+    color: var(--verde);
+}
+
+.contacto {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.contacto-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: var(--blanco);
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+}
+
+.contacto small {
+    display: block;
+    color: var(--gris);
+    font-size: 0.85rem;
+}
+
+.contacto strong {
+    font-size: 1.35rem;
+    color: #1f2a44;
+}
+
+/* ---------- Contenido ---------- */
+
+.hero-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 24px;
+    padding-top: 60px;
+}
+
+.etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 20px;
+    color: var(--verde);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.etiqueta::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: var(--verde);
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.subtitulo {
+    max-width: 440px;
+    margin: 0 0 36px;
+    color: var(--gris);
+    line-height: 1.7;
+}
+
+/* ---------- Botones ---------- */
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 26px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+}
+
+.boton span {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.boton-naranja {
+    background: var(--naranja);
+    color: var(--blanco);
+    border: 2px solid var(--naranja);
+}
+
+.boton-naranja:hover {
+    background: var(--naranja-oscuro);
+}
+
+.boton-borde {
+    border: 2px solid var(--verde);
+    color: var(--texto);
+}
+
+.boton-borde:hover {
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+/* ---------- Ilustración y onda ---------- */
+
+.hero-fruta {
+    width: 100%;
+    max-width: 460px;
+    justify-self: end;
+}
+
+.onda {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 110px;
+}
+
+/* ---------- Móvil ---------- */
+
+@media (max-width: 800px) {
+    .barra {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .contacto {
+        margin-left: 0;
+    }
+
+    .hero-contenido {
+        grid-template-columns: 1fr;
+        padding-top: 32px;
+    }
+
+    .hero-fruta {
+        justify-self: center;
+        max-width: 300px;
+    }
+}

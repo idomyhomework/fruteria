@@ -1,13 +1,17 @@
 <?php
 require_once __DIR__ . '/includes/sesion.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usuario = is_string($_POST['usuario'] ?? null) ? $_POST['usuario'] : '';
-    $contrasena = is_string($_POST['contrasena'] ?? null) ? $_POST['contrasena'] : '';
-
-    if (!iniciar_sesion_administrador($usuario, $contrasena)) {
-        poner_aviso('Usuario o contraseña incorrectos');
-    }
+// El formulario está en admin.php; aquí solo se recibe el POST.
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    redirigir('admin.php');
 }
 
-redirigir('catalogo.php');
+$usuario = is_string($_POST['usuario'] ?? null) ? $_POST['usuario'] : '';
+$contrasena = is_string($_POST['contrasena'] ?? null) ? $_POST['contrasena'] : '';
+
+if (iniciar_sesion_administrador($usuario, $contrasena)) {
+    redirigir('index.php');
+}
+
+poner_aviso('Usuario o contraseña incorrectos');
+redirigir('admin.php');

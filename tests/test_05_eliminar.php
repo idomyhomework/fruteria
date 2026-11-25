@@ -72,7 +72,7 @@ function test_eliminar_sin_login_se_rechaza(): void
     comprobar($estado === 303, "Estado $estado");
 
     [, $html] = get('/catalogo.php');
-    contiene($html, 'Inicia sesión como Administrador');
+    no_contiene($html, 'Inicia sesión como Administrador');
     contiene($html, 'Fruta de la pasión');
 }
 

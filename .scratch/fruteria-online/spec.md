@@ -12,7 +12,7 @@ A small website, deployed on the shop's AWS Ubuntu server under Apache with a Ma
 
 - A **home page** with the shop's name and a link to the Catálogo (plus, for a logged-in Administrador, a link to Inventario and "Cerrar sesión").
 - A public **Catálogo** that anyone can read and search by nombre, showing every Producto with its image, nombre, Tipo, Precio (€/kg) and Cantidad (kg), and marking empty ones as "Agotado".
-- An **Administrador login** on the Catálogo page. Once logged in, the Administrador can change each Producto's Cantidad and delete Productos directly from their rows.
+- An **Administrador login** on its own page, `admin.php`, not linked from anywhere (the Administrador types its address; changed in ticket 11, it was on the Catálogo before). Once logged in, the Administrador can change each Producto's Cantidad and delete Productos directly from their rows.
 - An **Inventario** page, only for the Administrador, with a form to add a new Producto.
 - The database starts with one Producto already in it: Fruta de la pasión.
 - **Pedidos** (added after ticket 06): a Cliente, still without an account, adds Productos to a **Carrito** and places a **Pedido** with their nombre and teléfono. Placing it takes the kilos out of the Cantidad. The Pedido is collected and paid at the shop; nothing is charged online. The Administrador sees every Pedido on a **Pedidos** page and moves it through its Estados.
@@ -48,13 +48,13 @@ A small website, deployed on the shop's AWS Ubuntu server under Apache with a Ma
 
 20. As a Cliente, I want not to see any Administrador controls (Actualizar, Eliminar, Inventario link), so that the Catálogo stays simple for me.
 21. As the frutería, I want a Cliente who calls an Administrador action directly (e.g. a crafted request) to be refused, so that only the Administrador can change data.
-22. As the frutería, I want a Cliente who opens the Inventario page directly to be redirected to the Catálogo login, so that nobody else can add Productos.
+22. As the frutería, I want a Cliente who opens the Inventario page directly to be redirected to the Catálogo, without any message, so that nobody else can add Productos.
 
 ### Administrador: session
 
-23. As the Administrador, I want a login form (usuario and contraseña) on the Catálogo page, so that I can start managing the shop from where I already am.
+23. As the Administrador, I want a login form (usuario and contraseña) on `admin.php`, a page I reach by typing its address, so that Clientes never see any Administrador access.
 24. As the Administrador, I want a single "Usuario o contraseña incorrectos" message on a failed login, so that nobody can tell which part was wrong.
-25. As the Administrador, I want the login form to disappear once I'm logged in, so that the page shows my controls instead.
+25. As the Administrador, I want a successful login to take me to the home page, and `admin.php` to send me there if I'm already logged in, so that I land on my links (Inventario, Pedidos).
 26. As the Administrador, I want to stay logged in while I move between home, Catálogo and Inventario, so that I don't have to log in on every page.
 27. As the Administrador, I want a "Cerrar sesión" link on the home page and the Catálogo, so that I can end my session on a shared computer.
 28. As the Administrador, I want my session to end when I close the browser, so that the next person on the computer isn't logged in as me.
@@ -94,7 +94,7 @@ A small website, deployed on the shop's AWS Ubuntu server under Apache with a Ma
 53. As the Administrador, I want an imagen URL that doesn't start with http:// or https:// to be rejected, so that images can actually load.
 54. As the Administrador, I want each rejected field to show its own message, so that I know exactly what to fix.
 55. As the Administrador, I want surrounding spaces in the nombre removed before saving, so that " Pera " is stored as "Pera".
-56. As the Administrador, I want a confirmation after saving and a link back to the Catálogo, so that I can check the new Producto.
+56. As the Administrador, I want a confirmation after saving, so that I know the new Producto was added. (Changed in ticket 11: the "Volver al Catálogo" link was replaced by the "Principal > Inventario" path; to check the Producto I go to the Catálogo from Principal.)
 57. As the Administrador, I want to be able to type Precio and Cantidad with a comma or a dot as decimal separator, so that Spanish-style numbers work.
 
 ### Operator / deployment
@@ -137,10 +137,14 @@ A small website, deployed on the shop's AWS Ubuntu server under Apache with a Ma
 84. As the Administrador, I want a Pedido to keep showing each Línea's nombre and Precio even after I delete or change that Producto, so that old Pedidos stay readable and their totals never change.
 85. As the frutería, I want a Cliente who opens the Pedidos page or changes an Estado to be refused, so that only the Administrador manages Pedidos.
 
+### Administrador: navigation
+
+86. As the Administrador, I want a "Principal > <page>" path at the top of the Catálogo, Inventario and Pedidos, linking back to the home page, so that I always know where I am and get home in one click. It replaces the old "Ir al Inventario", "Volver al Catálogo" and "Volver al inicio" links (added in ticket 11). Clientes don't see it.
+
 ## Implementation Decisions
 
 - **Stack**: plain PHP (no framework), MariaDB accessed through PDO with prepared statements for every query, served by Apache on Ubuntu on AWS. Plain HTTP; no HTTPS.
-- **Pages**: home, Catálogo, Inventario, Carrito, Pedido confirmation and Pedidos, plus a logout action. Each page is a server-rendered PHP page; the only JavaScript is `confirm()` on the row Eliminar button and on moving a Pedido to a final Estado.
+- **Pages**: home, Catálogo, Inventario, Carrito, Pedido confirmation, Pedidos and the Administrador login (`admin.php`, unlinked), plus a logout action. On the Catálogo, Inventario and Pedidos the Administrador sees a "Principal > <page>" path at the top that links to the home page. Each page is a server-rendered PHP page; the only JavaScript is `confirm()` on the row Eliminar button and on moving a Pedido to a final Estado.
 - **Config**: one config file holds the database connection settings and the Administrador's username (`admin`) and password hash produced by `password_hash()`. Login uses `password_verify()`. There is no admin table and no password-change screen.
 - **Accounts**: exactly one account, the Administrador. Clientes never log in.
 - **Session**: standard PHP session cookie (session-lifetime, ends on browser close). On successful login, the session ID is regenerated. Logout destroys the session.
@@ -179,7 +183,8 @@ A small website, deployed on the shop's AWS Ubuntu server under Apache with a Ma
   - home page shows the shop name and Catálogo link; Inventario link and "Cerrar sesión" only when logged in;
   - Catálogo shows Fruta de la pasión after a fresh setup; Cantidad 0 shows "Agotado"; ordering by nombre;
   - search: partial, case-insensitive, accent-insensitive, no-results message, `q` kept after Administrador actions;
-  - login: success, wrong password and wrong username give the same message; logout;
+  - login: on `admin.php`; success goes home, wrong password and wrong username give the same message on `admin.php`; the Catálogo never shows the login form; logout;
+  - the Administrador sees the "Principal > <page>" path on Catálogo, Inventario and Pedidos; a Cliente doesn't;
   - every write action without login is refused and changes nothing; Inventario without login redirects;
   - Actualizar sets Cantidad; invalid Cantidad is rejected;
   - Eliminar removes the Producto; deleting an already-deleted id shows a message;

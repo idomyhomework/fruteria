@@ -6,6 +6,9 @@ $q = trim(is_string($_GET['q'] ?? null) ? $_GET['q'] : '');
 $productos = listar_productos($q);
 
 cabecera('Catálogo');
+if (es_administrador()) {
+    migas('Catálogo');
+}
 ?>
 <h1>Catálogo</h1>
 
@@ -19,11 +22,6 @@ cabecera('Catálogo');
                 <a href="catalogo.php">Quitar búsqueda</a>
             <?php endif; ?>
         </div>
-        <?php if (es_administrador()): ?>
-            <div>
-                <a href="/inventario.php">Ir al Inventario</a>
-            </div>
-        <?php endif; ?>
     </div>
 </form>
 
@@ -110,18 +108,6 @@ cabecera('Catálogo');
             <?php endforeach; ?>
         </tbody>
     </table>
-<?php endif; ?>
-<?php if (!es_administrador()): ?>
-    <section class="acceso">
-        <h2>Acceso del Administrador</h2>
-        <form method="post" action="login.php">
-            <label for="usuario">Usuario</label>
-            <input type="text" id="usuario" name="usuario" autocomplete="username" required>
-            <label for="contrasena">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" autocomplete="current-password" required>
-            <button type="submit">Entrar</button>
-        </form>
-    </section>
 <?php endif; ?>
 <?php
 pie();

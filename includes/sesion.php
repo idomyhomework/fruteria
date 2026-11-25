@@ -46,12 +46,10 @@ function cerrar_sesion(): void
     ]);
     session_destroy();
 }
-
 // Para páginas y acciones de escritura: si no es el Administrador, fuera.
 function exigir_administrador(): void
 {
     if (!es_administrador()) {
-        poner_aviso('Inicia sesión como Administrador.');
         redirigir('catalogo.php');
     }
 }

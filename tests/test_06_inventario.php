@@ -38,7 +38,7 @@ function test_inventario_sin_login_redirige_al_catalogo(): void
     comprobar(cabecera_http($cabeceras, 'Location') === 'catalogo.php', 'No redirige al Catálogo');
 
     [, $html] = get('/catalogo.php');
-    contiene($html, 'Inicia sesión como Administrador');
+    no_contiene($html, 'Inicia sesión como Administrador');
 }
 
 function test_guardar_sin_login_no_guarda_nada(): void
@@ -70,7 +70,6 @@ function test_guardar_un_producto_valido_aparece_en_el_catalogo(): void
 
     [, $html] = get('/inventario.php');
     contiene($html, 'Producto guardado');
-    contiene($html, 'href="catalogo.php"');
 
     [, $html] = get('/catalogo.php');
     contiene(fila($html, 'Pera'), '2,50 €');

@@ -92,7 +92,7 @@ function test_actualizar_sin_login_se_rechaza(): void
     comprobar($estado === 303, "Estado $estado");
 
     [, $html] = get('/catalogo.php');
-    contiene($html, 'Inicia sesión como Administrador');
+    no_contiene($html, 'Inicia sesión como Administrador');
     contiene(fila($html, 'Fruta de la pasión'), '5,00 kg');
 }
 

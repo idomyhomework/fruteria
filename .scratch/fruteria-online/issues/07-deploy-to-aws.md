@@ -2,7 +2,7 @@
 
 **What to build:** The Frutería Online runs on the AWS Ubuntu machine under Apache with MariaDB, and its home page URL is ready to submit to Aules. A README explains setup so it can be repeated. See `../spec.md`.
 
-**Blocked by:** 04 (Change Cantidad from the Catálogo), 05 (Delete a Producto from the Catálogo), 06 (Inventario: add a Producto), 10 (Administrador: Pedidos)
+**Blocked by:** 04 (Change Cantidad from the Catálogo), 05 (Delete a Producto from the Catálogo), 06 (Inventario: add a Producto), 10 (Administrador: Pedidos), 11 (Acceso del Administrador en admin.php)
 
 **Status:** ready-for-human
 

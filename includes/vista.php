@@ -51,6 +51,16 @@ function cabecera(string $titulo): void
             <?php
 }
 
+// Ruta del Administrador: "Principal > Página".
+function migas(string $pagina): void
+{
+    ?>
+    <nav class="migas" aria-label="Ruta">
+        <a href="index.php">Principal</a> &gt; <span aria-current="page"><?= e($pagina) ?></span>
+    </nav>
+    <?php
+}
+
 function pie(): void
 {
     ?>

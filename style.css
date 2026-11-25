@@ -186,6 +186,14 @@ label {
     opacity: 0.85;
 }
 
+/* ---------- Ruta del Administrador ---------- */
+
+.migas {
+    margin-bottom: 8px;
+    color: var(--gris);
+    font-size: 0.9rem;
+}
+
 /* ---------- Catálogo ---------- */
 
 .buscador {
@@ -232,7 +240,8 @@ label {
     background: var(--borde);
 }
 
-.cambiar-cantidad {
+.cambiar-cantidad,
+.cambiar-estado {
     display: flex;
     gap: 8px;
     align-items: center;

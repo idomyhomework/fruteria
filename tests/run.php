@@ -142,7 +142,7 @@ function cabecera_http(array $cabeceras, string $nombre): string
     return '';
 }
 
-// Envía el formulario de login del Catálogo.
+// Envía el formulario de login de admin.php.
 function login(string $usuario = 'admin', string $contrasena = CLAVE_TEST): array
 {
     return post('/login.php', ['usuario' => $usuario, 'contrasena' => $contrasena]);
